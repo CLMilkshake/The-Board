@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Game Show Scores</title>
+  <link rel="stylesheet" href="index.css">
+  <style>
+
+    button {
+      margin-bottom: 15px;
+      padding: 10px 15px;
+      font-size: 16px;
+      background-color: #cea035d8;
+      color: white;
+    }
+
+    .table-container {
+      max-width: 100%;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      table-layout: auto;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border: 1px solid black;
+      padding: 8px 12px;
+      text-align: left;
+      word-break: break-word;
+    }
+
+    th {
+      background-color: #00000060;
+    }
+    td {
+        background-color: #4444449a;
+    }
+
+    .leaderboard {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: rgb(255, 255, 255);
+        width: 100%;
+        padding-bottom: 2%;
+        padding-left: 1%;
+        padding-right: 1%;
+        border-radius: 20px;
+        background-color: rgba(0, 0, 0, 0.432);
+        text-align: center;
+    }
+    .leaderboard li {
+        margin: 5px 0;
+        font-size: 30px;
+        font-weight: bold;
+    }
+
+
+    @media (max-width: 600px) {
+      table, th, td {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+    <header>
+
+        <div class="main">
+            <img src="images/logo.png" style="width: 120px;">
+            <h1>Milkshake Lab Productions</h1>
+        </div>
+    </header>
+
+    <nav>
+        <b><a href="index.html">Home</a></b>
+        <b><a href="theboard.html">Info</a></b>
+        <b><a href="scores.html">Scores</a></b>
+        <b><a href="sponsors.html">Sponsors</a></b>
+    </nav>
+
+    <div class="content">
+        <h1>THE BOARD</h1>
+        <hr>
+        <h1>Scores</h1>
+        <div class="leaderboard" id="leaderboard">
+            <h2>Leaderboard</h2>
+            <ol id="leaderList">
+            <!-- Filled dynamically -->
+            </ol>
+            <button onclick="loadScores()">🔄 Refresh Scores</button>
+            <table id="scoreTable" style="color: rgb(255, 255, 255); width:100%; table-layout: auto; border-collapse: collapse;">
+                <thead>
+                <tr id="headerRow"></tr>
+                </thead>
+                <tbody id="scoreBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 CLMilkshake</p>
+    </footer>
+
+  <script>
+    const sheetId = '1OY8XyzotA8afgMUSCN4__L6W4U70sISUms_PUk40ybQ';
+    const sheetName = 'Sheet1';
+    const url = `https://opensheet.elk.sh/${sheetId}/${sheetName}`;
+
+    function loadScores() {
+      /*
+      const headerRow = document.getElementById('headerRow');
+      const scoreBody = document.getElementById('scoreBody');
+      */
+      const leaderList = document.getElementById('leaderList');
+
+      // Clear old data
+      /*
+      headerRow.innerHTML = '';
+      scoreBody.innerHTML = '';
+      */
+      leaderList.innerHTML = '';
+
+      fetch(url)
+        .then(res => res.json())
+        .then(data => {
+          /*
+          const headers = Object.keys(data[0]);
+          headers.push('Total');
+
+          // Build header row
+          headers.forEach(header => {
+            const th = document.createElement('th');
+            th.textContent = header;
+            headerRow.appendChild(th);
+          });
+          */
+
+          // Prepare array for leaderboard
+          const scores = [];
+
+          // Build leaderboard only
+          data.forEach(row => {
+            let total = 0;
+            // Calculate total points
+            Object.keys(row).forEach(key => {
+              if (key !== Object.keys(row)[0]) { // skip first column (name)
+                const num = parseInt(row[key]);
+                if (!isNaN(num)) total += num;
+              }
+            });
+
+            const nameKey = Object.keys(row)[0];
+            scores.push({ name: row[nameKey], total: total });
+          });
+
+          // Sort leaderboard and update
+          scores.sort((a, b) => b.total - a.total);
+          scores.forEach(player => {
+            const li = document.createElement('li');
+            li.textContent = `${player.name} - ${player.total} pts`;
+            leaderList.appendChild(li);
+          });
+        });
+    }
+
+    // Load once on page load
+    window.onload = loadScores;
+  </script>
+</body>
+</html>
