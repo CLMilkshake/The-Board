@@ -3,69 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Game Show Scores</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="index.css">
-  <style>
-
-    button {
-      margin-bottom: 15px;
-      padding: 10px 15px;
-      font-size: 16px;
-      background-color: #cea035d8;
-      color: white;
-    }
-
-    .table-container {
-      max-width: 100%;
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      table-layout: auto;
-      border-collapse: collapse;
-    }
-
-    th, td {
-      border: 1px solid black;
-      padding: 8px 12px;
-      text-align: left;
-      word-break: break-word;
-    }
-
-    th {
-      background-color: #00000060;
-    }
-    td {
-        background-color: #4444449a;
-    }
-
-    .leaderboard {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        color: rgb(255, 255, 255);
-        width: 100%;
-        padding-bottom: 2%;
-        padding-left: 1%;
-        padding-right: 1%;
-        border-radius: 20px;
-        background-color: rgba(0, 0, 0, 0.432);
-        text-align: center;
-    }
-    .leaderboard li {
-        margin: 5px 0;
-        font-size: 30px;
-        font-weight: bold;
-    }
-
-
-    @media (max-width: 600px) {
-      table, th, td {
-        font-size: 14px;
-      }
-    }
-  </style>
 </head>
 <body>
     <header>
@@ -90,15 +29,15 @@
         <div class="leaderboard" id="leaderboard">
             <h2>Leaderboard</h2>
             <ol id="leaderList">
-            <!-- Filled dynamically -->
+
             </ol>
             <button onclick="loadScores()">🔄 Refresh Scores</button>
-            <table id="scoreTable" style="color: rgb(255, 255, 255); width:100%; table-layout: auto; border-collapse: collapse;">
+            <!-- <table id="scoreTable" style="color: rgb(255, 255, 255); table-layout: auto; border-collapse: collapse;">
                 <thead>
                 <tr id="headerRow"></tr>
                 </thead>
                 <tbody id="scoreBody"></tbody>
-            </table>
+            </table> -->
         </div>
     </div>
 
@@ -118,7 +57,6 @@
       */
       const leaderList = document.getElementById('leaderList');
 
-      // Clear old data
       /*
       headerRow.innerHTML = '';
       scoreBody.innerHTML = '';
@@ -132,7 +70,6 @@
           const headers = Object.keys(data[0]);
           headers.push('Total');
 
-          // Build header row
           headers.forEach(header => {
             const th = document.createElement('th');
             th.textContent = header;
@@ -140,15 +77,12 @@
           });
           */
 
-          // Prepare array for leaderboard
           const scores = [];
 
-          // Build leaderboard only
           data.forEach(row => {
             let total = 0;
-            // Calculate total points
             Object.keys(row).forEach(key => {
-              if (key !== Object.keys(row)[0]) { // skip first column (name)
+              if (key !== Object.keys(row)[0]) { 
                 const num = parseInt(row[key]);
                 if (!isNaN(num)) total += num;
               }
@@ -158,7 +92,6 @@
             scores.push({ name: row[nameKey], total: total });
           });
 
-          // Sort leaderboard and update
           scores.sort((a, b) => b.total - a.total);
           scores.forEach(player => {
             const li = document.createElement('li');
@@ -168,7 +101,6 @@
         });
     }
 
-    // Load once on page load
     window.onload = loadScores;
   </script>
 </body>
