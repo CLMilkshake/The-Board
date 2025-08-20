@@ -61,9 +61,6 @@ header {
 }
 
 
-
-
-
 .sponsor h3 {
     color: white;
     text-align: right;
@@ -241,6 +238,28 @@ footer {
     padding: 10px;
     position: fixed;
     bottom: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+footer p {
+    margin-right: 33%;
+}
+
+.controls {
+    background: rgba(0,0,0,0.6);
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    z-index: 1000;
+    margin-left: 33%;
+}
+
+.controls select,
+.controls input {
+    margin-top: 5px;
     width: 100%;
 }
 
