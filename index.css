@@ -312,4 +312,12 @@ button {
     .main h1 {
         font-size: 150%;
     }
+
+    footer p {
+    margin-right: 20%;
+    }
+
+    .controls {
+        margin-left: 20%;
+    }
 }
