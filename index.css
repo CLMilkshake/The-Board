@@ -242,19 +242,16 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-footer p {
-    margin-right: 33%;
+    flex-direction: column;
 }
 
+
 .controls {
-    background: rgba(0,0,0,0.6);
     color: white;
     padding: 10px;
     border-radius: 8px;
     font-size: 14px;
     z-index: 1000;
-    margin-left: 33%;
 }
 
 .controls select,
@@ -311,13 +308,5 @@ button {
     }
     .main h1 {
         font-size: 150%;
-    }
-
-    footer p {
-    margin-right: 20%;
-    }
-
-    .controls {
-        margin-left: 20%;
     }
 }
