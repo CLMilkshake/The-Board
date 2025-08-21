@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="twitch-embed" 
+        style="position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        border: none;
+        z-index: -1;">
+    </div>
+    <div class="leaderboard" id="leaderboard" style="position: absolute; top:70vh; left:3vw; color:white; background-color:rgba(0,0,0,0.3); padding:15px; border-radius: 10px;">
+            <h2>Leaderboard</h2>
+            <ol id="leaderList">
+
+            </ol>
+            <button onclick="loadScores()">🔄 Refresh Scores</button>
+            <!-- <table id="scoreTable" style="color: rgb(255, 255, 255); table-layout: auto; border-collapse: collapse;">
+                <thead>
+                <tr id="headerRow"></tr>
+                </thead>
+                <tbody id="scoreBody"></tbody>
+            </table> -->
+    </div>
+
+    <script src="https://embed.twitch.tv/embed/v1.js"></script>
+
+        <!-- Create a Twitch.Embed object that will render within the "twitch-embed" element -->
+        <script type="text/javascript">
+        new Twitch.Embed("twitch-embed", {
+            width: "100%",
+            height: "100%",
+            channel: "clmilkshake15",
+            layout: "video"
+        });
+    </script>
+    <!--Score Update Script-->
+  <script>
+    const sheetId = '1OY8XyzotA8afgMUSCN4__L6W4U70sISUms_PUk40ybQ';
+    const sheetName = 'Sheet1';
+    const url = `https://opensheet.elk.sh/${sheetId}/${sheetName}`;
+
+    function loadScores() {
+      /*
+      const headerRow = document.getElementById('headerRow');
+      const scoreBody = document.getElementById('scoreBody');
+      */
+      const leaderList = document.getElementById('leaderList');
+
+      /*
+      headerRow.innerHTML = '';
+      scoreBody.innerHTML = '';
+      */
+      leaderList.innerHTML = '';
+
+      fetch(url)
+        .then(res => res.json())
+        .then(data => {
+          /*
+          const headers = Object.keys(data[0]);
+          headers.push('Total');
+
+          headers.forEach(header => {
+            const th = document.createElement('th');
+            th.textContent = header;
+            headerRow.appendChild(th);
+          });
+          */
+
+          const scores = [];
+
+          data.forEach(row => {
+            let total = 0;
+            Object.keys(row).forEach(key => {
+              if (key !== Object.keys(row)[0]) { 
+                const num = parseInt(row[key]);
+                if (!isNaN(num)) total += num;
+              }
+            });
+
+            const nameKey = Object.keys(row)[0];
+            scores.push({ name: row[nameKey], total: total });
+          });
+
+          scores.sort((a, b) => b.total - a.total);
+          scores.forEach(player => {
+            const li = document.createElement('li');
+            li.textContent = `${player.name} - ${player.total} pts`;
+            leaderList.appendChild(li);
+          });
+        });
+    }
+
+    window.onload = loadScores;
+  </script>
+</body>
+</html>
