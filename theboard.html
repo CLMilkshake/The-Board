@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <header>
+    <header style="background-color:rgba(0, 0, 0, 0.3);">
 
         <div class="main">
             <img src="images/logo.png" style="width: 120px;">
@@ -54,7 +54,7 @@
         color2: "rgba(255, 251, 0, 0.3)", 
         color3:"2px solid rgba(255, 238, 0, 1)", 
         textColor:"white",
-        headerBackground:"rgba(0, 0, 0, 0)"
+        headerBackground:"rgba(0, 0, 0, 0.3)"
     },
     { name: "Fancy", 
         background: "images/TheBoardBackgroundFancy.png", 
@@ -85,7 +85,6 @@
         nav.style.backgroundColor = theme.color2;
         nav.style.borderTop = theme.color3;
         nav.style.borderBottom = theme.color3;
-        header.style.backgroundColor = theme.headerBackground;
         content.style.backgroundColor = theme.headerBackground;
 
         nav.querySelectorAll("a").forEach(link => {
