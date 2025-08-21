@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <header style="background-color:rgba(0, 0, 0, 0.3);">
+    <header>
 
         <div class="main">
             <img src="images/logo.png" style="width: 120px;">
@@ -22,16 +22,43 @@
         <b><a href="theboard.html">Info</a></b>
         <b><a href="scores.html">Scores</a></b>
         <b><a href="sponsors.html">Sponsors</a></b>
-        
     </nav>
 
-    <div class="content" style="color: white; text-shadow:0 0 10px #000000; background-color:rgba(0, 0, 0, 0.3);border-radius:60px;">
-        <h1>THE BOARD</h1>
+    <div class="content">
+        <h1>Pick your favorite and share it!</h1>
         <hr>
-        <h2 style="padding-left: 5%; padding-right: 5%;">Welcome to The Board! A small game show where it's all about The Board. Contestants will pick a card that can have trivia, a challenge, and some other weird things for them to do. This time, we decided to go all out and give The Board a voice, for better or worse. It's hard to explain what this really is. Come join us on September 5th to see for yourself. Admission is free! Please try to RSVP so we can estimate how many people will show up. By RSVP-ing, you will be entered into a raffle for Berry Station Coupons!</h2>
-        <h2>Sponsored by <a href="https://getberrystation.com" style="color:white;text-decoration: underline;"> Berry Station</a> and Parke Express</h2>
-        <h2>RSVP Button will be here, but I don't want to take RSVPs until the stage is ready </h2>
-        <!-- <h2><a href="https://forms.gle/y9espF8mEc1MF2XWA" style="background-color: rgb(0,0,0,0.3); color: white; padding: 10px; border-radius: 10px;">RSVP Here</a></h2> -->
+        <div class="grid-container" style="grid-template-columns: repeat(auto-fill, minmax(200px, 30%));">
+            <div class="grid-item">
+                <a>
+                    <h2 style="font-size: 50px;"><b>Original Promo</b></h2>
+                    <img src="images/promos/TheBoardPromo1.png" alt="Promo1" style="width: 50%;">
+                </a>
+            </div>
+            <div class="grid-item" >
+                <a>
+                    <h2 style="font-size: 50px;"><b>Fancy Promo</b></h2>
+                    <img src="images/promos/TheBoardFancyPromo.png" alt="Fancy Promo" style="width: 50%;">
+                </a>
+            </div>
+            <div class="grid-item" >
+                <a>
+                    <h2 style="font-size: 50px;"><b>Black and White Image</b></h2>
+                    <img src="images/promos/TheBoardBlackAndWhite.jpg" alt="Black and White Stage" style="width: 50%;">
+                </a>
+            </div>
+            <div class="grid-item" >
+                <a>
+                    <h2 style="font-size: 50px;"><b>Saturated Image</b></h2>
+                    <img src="images/promos/TheBoardSaturated.jpg" alt="Saturated" style="width: 50%;">
+                </a>
+            </div>
+            <div class="grid-item" >
+                <a>
+                    <h2 style="font-size: 50px;"><b>Basic Pop Image</b></h2>
+                    <img src="images/promos/TheBoardPop.jpg" alt="Pop" style="width: 50%;">
+                </a>
+            </div>
+        </div>
     </div>
 
     <footer>
@@ -53,16 +80,16 @@
         color1: "white", 
         color2: "rgba(255, 251, 0, 0.3)", 
         color3:"2px solid rgba(255, 238, 0, 1)", 
-        textColor:"white",
-        headerBackground:"rgba(0, 0, 0, 0.3)"
+        textcolor:"white",
+        headerBackground:"rgba(0, 0, 0, 0)"
     },
     { name: "Fancy", 
         background: "images/TheBoardBackgroundFancy.png", 
         color1: "white", 
         color2: "black", 
         color3:"2px solid gray", 
-        textColor:"white",
-        headerBackground:"rgba(0, 0, 0, 0.5)" 
+        textColor:"gray",
+        headerBackground:"rgba(0, 0, 0, 0.3)" 
     }
     ];
 
@@ -70,7 +97,7 @@
     const randomToggle = document.getElementById("randomToggle");
     const nav = document.querySelector("nav");
     const header = document.querySelector("header");
-    const content = document.querySelector(".content");
+    const content = document.querySelector("content");
 
     themes.forEach((t, i) => {
         const option = document.createElement("option");
@@ -85,14 +112,17 @@
         nav.style.backgroundColor = theme.color2;
         nav.style.borderTop = theme.color3;
         nav.style.borderBottom = theme.color3;
-        content.style.backgroundColor = theme.headerBackground;
+        header.style.backgroundColor = theme.headerBackground;
 
         nav.querySelectorAll("a").forEach(link => {
             link.style.color = theme.color1;
         });
-        content.querySelectorAll("h2").forEach(link => {
-            link.style.color = theme.textColor;
-        });
+        if (content) {
+            content.querySelectorAll("h2").forEach(h2 => {
+                h2.style.color = theme.textColor;
+            });
+        }
+
 
         if (!randomToggle.checked) {
             localStorage.setItem("chosenTheme", index);
