@@ -90,7 +90,7 @@ nav a {
 
 nav a:hover {
     transition: 0.5s all;
-    background-color: #ffffff98;
+    background-color: rgba(97, 97, 97, 0.5);
     color: rgb(0, 0, 0);
 }
 
@@ -291,18 +291,20 @@ button {
     font-weight: bold;
 }
 
+.address:hover span {
+  display: none
+}
 
+.address:hover:after {
+  content: " - Bicentennial Park Amphitheater Clearfield, UT 84015"
+}
 
 
 @media (max-width: 600px) {
-    nav {
-        flex-direction: row;
-        border-radius: 30px;
-        max-height: 200px;
-    }
     nav a {
-        text-align: left;
-        padding: 10px;
+        padding: 5px;
+        padding-top:10px;
+        padding-bottom: 10px;
         /* border-top: 1px solid #444;
         border-bottom: 1px solid #444; */
     }
